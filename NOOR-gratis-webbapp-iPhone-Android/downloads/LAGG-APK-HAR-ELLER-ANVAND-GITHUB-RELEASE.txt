@@ -1,0 +1,2 @@
+Den här mappen innehåller ingen APK. Använd hellre GitHub Releases och lägg in
+länken i download-config.json. Publicera bara signerad och testad app.
