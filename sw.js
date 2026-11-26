@@ -1,11 +1,7 @@
-/* Offline UI cache. Intentional: does not cache missing APKs. */
-const CACHE='noor-web-v1.0.0';
-const UI=['./','./index.html','./styles.css','./app.mjs','./solar.mjs','./manifest.webmanifest','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png','./integritet.html'];
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(UI)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',event=>event.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))])));
-self.addEventListener('fetch',event=>{
- if(event.request.method!=='GET'||new URL(event.request.url).origin!==self.location.origin)return;
- const path=new URL(event.request.url).pathname;
- if(path.endsWith('.apk'))return;
- event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request).then(resp=>{if(resp.ok&&resp.type==='basic'){const c=resp.clone();caches.open(CACHE).then(cache=>cache.put(event.request,c));}return resp;})));
-});
+const CACHE='noor-web-v9.5.5-alarms1';
+const UI=["./", "./index.html", "./styles.css", "./app.mjs", "./solar.mjs", "./manifest.webmanifest", "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./integritet.html", "./web-guide.mjs", "./web-prayerJournal.mjs", "./web-premium.mjs", "./web-seasonal.mjs", "./web-ui.mjs", "./web-alarms.mjs", "./audio/adhan.mp3", "./audio/ADHAN-LICENS.txt", "./web-upgrade.mjs", "./guide-images/feet.png", "./guide-images/head.png", "./guide-images/qunut.png", "./guide-images/ruku.png", "./guide-images/sit.png", "./guide-images/stand.png", "./guide-images/sujud.png", "./guide-images/takbir.png", "./guide-images/washface.png", "./guide-images/washleft.png", "./guide-images/washright.png"];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(UI.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('noor-web-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{const r=e.request,u=new URL(r.url);if(r.method!=='GET'||u.origin!==self.location.origin||u.pathname.endsWith('.apk')||u.pathname.endsWith('/download-config.json'))return;
+ if(r.mode==='navigate'&&(u.pathname===new URL('./',self.location.href).pathname||u.pathname===new URL('./index.html',self.location.href).pathname)){e.respondWith(caches.match('./index.html').then(c=>c||fetch(r)));return;}
+ e.respondWith(caches.open(CACHE).then(async c=>{const cached=await c.match(r);if(cached){const range=r.headers.get('range');if(range&&u.pathname.endsWith('/audio/adhan.mp3')){const bytes=await cached.arrayBuffer(),m=/^bytes=(\d*)-(\d*)$/.exec(range);if(!m||(!m[1]&&!m[2]))return new Response(null,{status:416,headers:{'Content-Range':`bytes */${bytes.byteLength}`}});const start=m[1]?Number(m[1]):Math.max(0,bytes.byteLength-Number(m[2])),end=m[1]&&m[2]?Math.min(Number(m[2]),bytes.byteLength-1):bytes.byteLength-1;if(start>end||start>=bytes.byteLength)return new Response(null,{status:416,headers:{'Content-Range':`bytes */${bytes.byteLength}`}});return new Response(bytes.slice(start,end+1),{status:206,headers:{'Content-Type':'audio/mpeg','Content-Range':`bytes ${start}-${end}/${bytes.byteLength}`,'Content-Length':String(end-start+1),'Accept-Ranges':'bytes'}});}return cached;}return fetch(r);}));});

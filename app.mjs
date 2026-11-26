@@ -1,3 +1,5 @@
+import { initPrayerAlarms } from './web-alarms.mjs';
+import { initWebUpgrade } from './web-ui.mjs';
 import { prayerTimes, qiblaBearing, civilDate, formatTime } from './solar.mjs';
 const $=(id)=>document.getElementById(id);
 const CITIES={
@@ -28,6 +30,7 @@ function refreshSchedule(){
  if(scheduleKey!==key){scheduleKey=key;try{schedule=prayerTimes(day,loc.lat,loc.lon);$('prayer-list').removeAttribute('aria-busy');renderPrayers();}catch(err){schedule=null;$('prayer-list').textContent='Kunde inte beräkna bönetiderna: '+err.message;$('calc-note').textContent='Välj en annan plats eller kontrollera din platsinställning.';}}
  $('location-name').textContent=loc.name;
  $('date-label').textContent=formatDate(now);
+ window.dispatchEvent(new CustomEvent('noor-date',{detail:{day, schedule, tz:loc.tz}}));
  updateUpcoming(now.getTime());
  updateQibla();
  const dayNum=Math.floor(Date.UTC(day.year,day.month-1,day.day)/86400000);
@@ -64,6 +67,8 @@ function chooseTab(tab){
  document.querySelectorAll('.tab-panel').forEach(panel=>{let active=panel.dataset.panel===tab;panel.hidden=!active;panel.classList.toggle('active',active);});
  document.querySelectorAll('.nav-link').forEach(button=>{let active=button.dataset.tab===tab;button.classList.toggle('active',active);active?button.setAttribute('aria-current','page'):button.removeAttribute('aria-current');});
  if(tab==='qibla')updateQibla();
+ window.dispatchEvent(new CustomEvent('noor-tab',{detail:tab}));
+ if(document.documentElement.classList.contains('noor-standalone')) document.getElementById('app-content').scrollTop=0;
 }
 document.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>chooseTab(button.dataset.tab)));
 $('settings-shortcut').addEventListener('click',()=>chooseTab('mer'));
@@ -122,10 +127,12 @@ $('install-help').addEventListener('click',e=>{if(e.target===$('install-help'))c
 if(location.protocol.startsWith('http'))fetch(new URL('download-config.json',location.href),{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(config=>{
   const url=String(config.androidApkUrl||'').trim();
   if(url&&/^https:\/\//i.test(url)){
-   const a=$('apk-download');a.href=url;a.classList.remove('disabled');a.removeAttribute('aria-disabled');a.textContent='Ladda ner NOOR för Android (APK)';
+   const a=$('apk-download');a.href=url;a.classList.remove('disabled');a.removeAttribute('aria-disabled');a.textContent='Ladda ner NOOR 9.5.5 för Android (APK)';
    $('apk-status').textContent='Android kan visa en säkerhetsvarning vid installation utanför Google Play. Ladda bara ner om du litar på utgivaren.';
   }
 }).catch(()=>{});
 $('apk-download').addEventListener('click',e=>{if($('apk-download').classList.contains('disabled'))e.preventDefault();});
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+initWebUpgrade({ getLocation:()=>loc, getSchedule:()=>schedule, chooseTab, dua });
+initPrayerAlarms(()=>loc);
 renderDhikr();refreshSchedule();window.setInterval(refreshSchedule,30000);

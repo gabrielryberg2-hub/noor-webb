@@ -1,0 +1,11 @@
+NOOR 9.5.5 WEBB – komplett uppdatering med bönepåminnelser
+
+Använd denna ZIP istället för den tidigare iPhone-webbuppdateringen. Säkerhetskopiera GitHub-projektet. Packa upp ZIP-filen och välj Add file > Upload files i noor-webb/main. Dra in filerna och undermapparna audio och guide-images; inte själva ZIP-filen. index.html, sw.js och app.mjs ska ligga direkt i roten. Behåll befintliga solar.mjs, icons och download-config.json. Android-APK:n och länken ändras inte. Commit changes först efter kontroll av filerna. Testa helst på en separat förhandsvisning innan du ersätter den offentliga versionen.
+
+Bönepåminnelser: Mer > Bönepåminnelser & Adhan. Välj böner, tid (vid bönen eller 5/10/15 min före) och aktivera. Tryck Testa / aktivera Adhan-ljud och Stoppa ljud. Förvarning i webbappen är text, ljud vid bönetid kan spelas när appen är synlig och webbläsaren tillåter uppspelning. Ljud behöver provas vid varje ny session. Ingen bakgrundstimer eller pushserver. Lita inte på webbappen som Fajr-väckarklocka.
+
+Kalender: välj 7 eller 30 dagar och Skapa kalenderfil (.ics). Importera i en separat NOOR-kalender. Om delningsmenyn inte erbjuder Kalender, mejla filen till dig själv och öppna bilagan i Apple Mail. Slå på kalenderaviseringar och prova en kommande händelse. Systemets avisering används, inte Adhan. Uppdatera kalendern vid platsbyte eller ny period och ta bort gamla NOOR-händelser för att undvika dubbletter. Tiderna är uppskattningar. Kontrollera lokal Shia-kalender. Kalenderimport och ljud på låst skärm ej verifierade på iPhone. Ingen garanti för leverans vid Fokus eller tyst läge.
+
+Befintlig journal, guider, oas, Qada, dua, teman och lagringsnycklar kvar. Nya påminnelseval sparas separat lokalt, inte i den befintliga JSON-säkerhetskopian. Manifest-ID oförändrat. Ny offline-cache inkluderar ljud och påminnelsemodul. Stäng och öppna webbappen på nytt vid uppdatering, rensa inte webbplatsdata.
+
+Tester: node web-tests.mjs (10 testgrupper); kör i sammanslagen webbrot med befintliga icons, solar.mjs och download-config.json. Syntaxkontroller. Ingen fysisk Safari-testning. Ingen verifiering av systemets kalenderaviseringar. Ingen pushserver eller riktig iOS-app. Religiös expertgranskning och integritetspolicygranskning återstår.
