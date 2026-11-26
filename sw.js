@@ -1,4 +1,4 @@
-const CACHE='noor-web-v9.5.5-alarms1';
+const CACHE='noor-web-v9.5.5-seo1';
 const UI=["./", "./index.html", "./styles.css", "./app.mjs", "./solar.mjs", "./manifest.webmanifest", "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./integritet.html", "./web-guide.mjs", "./web-prayerJournal.mjs", "./web-premium.mjs", "./web-seasonal.mjs", "./web-ui.mjs", "./web-alarms.mjs", "./audio/adhan.mp3", "./audio/ADHAN-LICENS.txt", "./web-upgrade.mjs", "./guide-images/feet.png", "./guide-images/head.png", "./guide-images/qunut.png", "./guide-images/ruku.png", "./guide-images/sit.png", "./guide-images/stand.png", "./guide-images/sujud.png", "./guide-images/takbir.png", "./guide-images/washface.png", "./guide-images/washleft.png", "./guide-images/washright.png"];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(UI.map(x=>new Request(x,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('noor-web-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
