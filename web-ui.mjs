@@ -21,6 +21,7 @@ function dateKey(loc){const d=civilDate(new Date(),loc.tz);return `${d.year}-${S
 export function initWebUpgrade({getLocation,getSchedule,chooseTab,dua}){
  let state;try{state=cleanState(JSON.parse(localStorage.getItem(KEY)));}catch{state=cleanState({});}
  let tab='idag',today=dateKey(getLocation()),day=today,lib='dua',prayer='Fajr',step=0,query='',onlyFav=false,decor='flower';
+ document.querySelectorAll('[data-library]').forEach(b=>b.addEventListener('click',()=>{lib=b.dataset.library;step=0;chooseTab('bibliotek');}));
  const allDuas=[...duas,...dua.filter(x=>!duas.some(d=>d.ref===x.ref)).map(x=>({id:x.ref,name:x.ref,ar:x.arabic,sv:x.sv,ref:x.ref}))];
  const applyTheme=()=>{document.documentElement.dataset.noorTheme=state.theme;};
  const updateProgress=()=>{const p=progress(state.journal,today,state.exempt);state.growth=Math.max(state.growth,p.total);state.bestEver=Math.max(state.bestEver,p.best);state.earned=rewards.filter(r=>state.earned.includes(r.days)||p.best>=r.days).map(r=>r.days);$('home-growth').textContent=`${state.growth} registrerade böner`+(state.streakEnabled?` · ${p.current} dagar i följd`:'');return p;};

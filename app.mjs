@@ -1,6 +1,7 @@
+import {qiblaInfo,smoothHeading,normalize,guidance} from './web-qibla.mjs';
 import { initPrayerAlarms } from './web-alarms.mjs';
 import { initWebUpgrade } from './web-ui.mjs';
-import { prayerTimes, qiblaBearing, civilDate, formatTime } from './solar.mjs';
+import { prayerTimes, civilDate, formatTime } from './solar.mjs';
 const $=(id)=>document.getElementById(id);
 const CITIES={
  kristianstad:['Kristianstad',56.0294,14.1567],malmo:['Malmö',55.605,13.0038],stockholm:['Stockholm',59.3293,18.0686],goteborg:['Göteborg',57.7089,11.9746],
@@ -13,7 +14,7 @@ const zone=Intl.DateTimeFormat().resolvedOptions().timeZone||'Europe/Stockholm';
 const defaultLoc={name:'Kristianstad (startort)',lat:56.0294,lon:14.1567,tz:'Europe/Stockholm',city:'kristianstad'};
 const savedLoc=safeRead('noor-web-location-v1');
 let loc=savedLoc&&Number.isFinite(savedLoc.lat)&&Number.isFinite(savedLoc.lon)?savedLoc:defaultLoc;
-let schedule=null, scheduleKey='', currentTab='idag', heading=null, orientationListening=false, installPrompt=null;
+let schedule=null, scheduleKey='', currentTab='idag', heading=null, compassSample=null, compassMessage="", orientationListening=false, installPrompt=null;
 let dhikr=Math.max(0,Math.min(100,Number(safeRead('noor-dhikr-total-v1'))||0));
 const dua=[
  {arabic:'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',sv:'Vår Herre, ge oss det goda i detta liv och i det kommande, och skydda oss från Eldens straff.',ref:'Koranen 2:201'},
@@ -66,7 +67,7 @@ function chooseTab(tab){
  currentTab=tab;
  document.querySelectorAll('.tab-panel').forEach(panel=>{let active=panel.dataset.panel===tab;panel.hidden=!active;panel.classList.toggle('active',active);});
  document.querySelectorAll('.nav-link').forEach(button=>{let active=button.dataset.tab===tab;button.classList.toggle('active',active);active?button.setAttribute('aria-current','page'):button.removeAttribute('aria-current');});
- if(tab==='qibla')updateQibla();
+ if(tab==='qibla')updateQibla();else stopCompass();
  window.dispatchEvent(new CustomEvent('noor-tab',{detail:tab}));
  if(document.documentElement.classList.contains('noor-standalone')) document.getElementById('app-content').scrollTop=0;
 }
@@ -85,22 +86,51 @@ $('get-location').addEventListener('click',()=>{
  },err=>{$('location-status').textContent=err.code===1?'Tillåt platsåtkomst i webbläsaren eller välj en ort manuellt.':'Kunde inte hämta platsen. Välj en ort manuellt.';},{enableHighAccuracy:false,timeout:15000,maximumAge:900000});
 });
 function updateQibla(){
- const bearing=qiblaBearing(loc.lat,loc.lon);$('qibla-deg').textContent=Math.round(bearing)+'°';
- $('compass-needle').style.transform=`rotate(${heading===null?bearing:bearing-heading}deg)`;
- if(heading!==null)$('sensor-info').textContent='Livekompass aktiv. Håll mobilen plant och undvik metallföremål. Kompassen kan behöva kalibreras.';
+ const info=qiblaInfo(loc.lat,loc.lon),g=guidance(info,compassSample,Date.now(),false);
+ const live=g.diff!==null, angle=live?compassSample.angle:0;
+ $('qibla-deg').textContent=Number.isFinite(info?.bearing)?Math.round(info.bearing)+'°':'—';
+ $('qibla-distance').textContent=info?Math.round(info.distance).toLocaleString('sv-SE')+' km till Kaba':'Ingen plats';
+ $('qibla-location').textContent='Vald plats: '+loc.name;
+ $('compass-dial').style.transform=`rotate(${-angle}deg)`;
+ $('compass-dial').querySelectorAll('.qibla-cardinal').forEach(el=>el.style.transform=`rotate(${angle}deg)`);
+ $('compass-needle').hidden=!Number.isFinite(info?.bearing);
+ $('compass-needle').style.transform=`rotate(${live?g.diff:info?.bearing||0}deg)`;
+ $('qibla-direction').textContent=g.mode==='unavailable'?'Ingen entydig riktning':live?(Math.abs(g.diff)<=5?'Nära beräknad riktning (ungefärligt)':`Vrid ${g.diff>0?'åt höger':'åt vänster'} ${Math.round(Math.abs(g.diff))}° (ungefärligt)`):'Riktning från geografiskt norr';
+ $('sensor-info').textContent=live?'Webbkompassen är ungefärlig; magnetiskt norr och sensorfel kan påverka. Kontrollera med en annan källa.':compassMessage||'Ingen liveavläsning. Norr är uppåt i diagrammet, inte nödvändigtvis i mobilens riktning.';
 }
 function onOrientation(e){
- if(Number.isFinite(e.webkitCompassHeading)){heading=((e.webkitCompassHeading%360)+360)%360;updateQibla();return;}
- if(e.absolute&&Number.isFinite(e.alpha)){heading=((360-e.alpha)%360+360)%360;updateQibla();}
+ if(currentTab!=='qibla'||document.hidden)return;
+ let raw=null,source='';
+ if(Number.isFinite(e.webkitCompassHeading)&&e.webkitCompassHeading>=0&&e.webkitCompassHeading<=360&&!(Number.isFinite(e.webkitCompassAccuracy)&&e.webkitCompassAccuracy<0)){raw=e.webkitCompassHeading;source='magnetic';}
+ else if(e.absolute===true&&Number.isFinite(e.alpha)&&e.alpha>=0&&e.alpha<=360){raw=360-e.alpha;source='absolute';}
+ if(raw===null)return;
+ // Heading is only intended for a flat phone, screen facing up, portrait mode.
+ if((Number.isFinite(e.beta)&&Math.abs(e.beta)>25)||(Number.isFinite(e.gamma)&&Math.abs(e.gamma)>25)||Math.abs(window.orientation||0)%180!==0){compassSample=null;compassMessage='Håll mobilen plant i stående läge.';updateQibla();return;}
+ const at=Date.now();heading=smoothHeading(compassSample?.source===source&&at-compassSample.at<3000?compassSample.angle:null,normalize(raw));
+ compassSample={angle:heading,source,accuracy:0,at};compassMessage='';updateQibla();
+}
+function stopCompass(){
+ if(orientationListening){window.removeEventListener('deviceorientationabsolute',onOrientation,true);window.removeEventListener('deviceorientation',onOrientation,true);orientationListening=false;}
+ compassSample=null;heading=null;compassMessage='';
 }
 $('compass-btn').addEventListener('click',async()=>{
  try{
+   stopCompass();
    if(typeof DeviceOrientationEvent==='undefined')throw new Error('Sensor saknas');
-   if(typeof DeviceOrientationEvent.requestPermission==='function'){const permission=await DeviceOrientationEvent.requestPermission();if(permission!=='granted')throw new Error('Tillstånd saknas');}
-   if(!orientationListening){window.addEventListener('deviceorientationabsolute',onOrientation,true);window.addEventListener('deviceorientation',onOrientation,true);orientationListening=true;}
-   $('sensor-info').textContent='Väntar på kompassens riktning… Om inget händer, använd gradtalet från norr.';
- }catch{ $('sensor-info').textContent='Livekompassen är inte tillgänglig eller fick inte tillstånd. Använd gradtalet från geografiskt norr i stället.'; }
+   if(typeof DeviceOrientationEvent.requestPermission==='function'){const permission=await DeviceOrientationEvent.requestPermission(true);if(permission!=='granted')throw new Error('Tillstånd saknas');}
+   if(currentTab!=='qibla')return;
+   window.addEventListener('deviceorientationabsolute',onOrientation,true);window.addEventListener('deviceorientation',onOrientation,true);orientationListening=true;
+   compassMessage='Väntar på kompassdata. Om inget händer, använd gradtalet från geografiskt norr.';
+ }catch{compassMessage='Livekompassen är inte tillgänglig eller fick inte tillstånd. Använd gradtalet från geografiskt norr.';}
+ updateQibla();
 });
+$('qibla-gps').addEventListener('click',()=>{
+ if(!navigator.geolocation){compassMessage='GPS saknas. Välj ort i Mer.';updateQibla();return;}
+ compassMessage='Hämtar GPS-position…';updateQibla();
+ navigator.geolocation.getCurrentPosition(pos=>{loc={name:'Min plats (GPS)',lat:pos.coords.latitude,lon:pos.coords.longitude,tz:zone,city:''};safeSave('noor-web-location-v1',loc);citySelect.value='';scheduleKey='';compassMessage='GPS uppdaterad. Aktivera kompassen.';refreshSchedule();},()=>{compassMessage='GPS kunde inte hämtas. Kontrollera platsbehörighet eller välj ort i Mer.';updateQibla();},{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopCompass();else if(currentTab==='qibla')updateQibla();});
+window.setInterval(()=>{if(currentTab==='qibla'&&compassSample&&Date.now()-compassSample.at>3000){compassSample=null;compassMessage='Kompassdata har upphört. Aktivera kompassen igen.';updateQibla();}},1000);
 const dhikrSteps=[{arabic:'الله أكبر',word:'Allahu Akbar',start:0,target:34},{arabic:'الحمد لله',word:'Alhamdulillah',start:34,target:33},{arabic:'سبحان الله',word:'SubhanAllah',start:67,target:33}];
 function renderDhikr(){
  const index=dhikr>=100?2:dhikr>=67?2:dhikr>=34?1:0;
@@ -127,7 +157,7 @@ $('install-help').addEventListener('click',e=>{if(e.target===$('install-help'))c
 if(location.protocol.startsWith('http'))fetch(new URL('download-config.json',location.href),{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(config=>{
   const url=String(config.androidApkUrl||'').trim();
   if(url&&/^https:\/\//i.test(url)){
-   const a=$('apk-download');a.href=url;a.classList.remove('disabled');a.removeAttribute('aria-disabled');a.textContent='Ladda ner NOOR 9.5.5 för Android (APK)';
+   const a=$('apk-download');a.href=url;a.classList.remove('disabled');a.removeAttribute('aria-disabled');a.textContent='Ladda ner NOOR 9.5.6 för Android (APK)';
    $('apk-status').textContent='Android kan visa en säkerhetsvarning vid installation utanför Google Play. Ladda bara ner om du litar på utgivaren.';
   }
 }).catch(()=>{});
