@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#092b2b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NOOR">
+  <meta name="description" content="NOOR – gratis Shia-bönetider enligt Ja'fari, Qibla, Tasbih Fatima al-Zahra och dua. Använd på iPhone och Android direkt i webbläsaren.">
+  <meta property="og:title" content="NOOR – Shia bönetider">
+  <meta property="og:description" content="Gratis böneapp för iPhone och Android: Ja'fari-bönetider, Qibla, dhikr och dua.">
+  <meta property="og:type" content="website">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>NOOR – Shia bönetider för iPhone och Android</title>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <header class="site-header wrap">
+    <a class="brand" href="#start" aria-label="NOOR startsida"><img src="icons/icon-192.png" alt="" width="42" height="42"><span>NOOR <em>نور</em></span></a>
+    <nav class="top-links" aria-label="Webbplatsens meny"><a href="#funktioner">Funktioner</a><a href="#installera">Installera</a><a href="integritet.html">Integritet</a></nav>
+    <span class="free-mark">KOSTNADSFRI</span>
+  </header>
+  <main id="start">
+    <section class="intro wrap" aria-labelledby="main-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="tiny-moon">☾</span> DIN DAGLIGA BÖNEKOMPASS</p>
+        <h1 id="main-title">Låt bönen <span>lysa upp</span> din dag.</h1>
+        <p class="hero-lead">NOOR ger dig Shia-bönetider, en personlig oas, bönejournal och illustrerade böneguider i en lugn och vacker upplevelse. På iPhone och Android – helt gratis.</p>
+        <div class="hero-actions"><a href="#appen" class="btn btn-gold">Öppna NOOR <span aria-hidden="true">↗</span></a><a href="#installera" class="btn btn-outline">Lägg till på mobilen</a></div>
+        <p class="quiet"><span class="small-check">✓</span> Inget konto behövs <span class="middle-dot">·</span> Ingen reklam i webbappen</p>
+      </div>
+      <div class="hero-symbol" aria-hidden="true"><div class="halo halo-outer"></div><div class="halo halo-inner"></div><span class="hero-crescent">☪</span><div class="hero-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div></div>
+    </section>
+
+    <section class="app-area wrap" id="appen" aria-labelledby="app-title">
+      <div class="app-heading"><div><p class="eyebrow">DIN PERSONLIGA BÖNEAPP</p><h2 id="app-title">NOOR <span class="muted-gold">i din hand</span></h2></div><p>En webbapp som fungerar direkt – ingen butik behövs.</p></div>
+      <div class="phone-surround">
+        <div class="phone" role="application" aria-label="NOOR webbapp">
+          <div class="app-top">
+            <div class="app-toprow"><div class="app-mark">☾ <b>NOOR</b> <span lang="ar">نور</span> <small class="web-version">9.5.5</small></div><button type="button" class="icon-btn" id="settings-shortcut" aria-label="Visa inställningar">⚙</button></div>
+            <div class="loc-line"><span aria-hidden="true">⌖</span><span id="location-name">Kristianstad</span><span class="loc-dot" aria-hidden="true"></span><span id="date-label">Laddar datum…</span></div>
+          </div>
+          <div class="app-content" id="app-content">
+            <section class="tab-panel active" data-panel="idag" id="tab-idag" aria-labelledby="nav-idag">
+              <div class="prayer-hero">
+                <p class="prayer-kicker">NÄSTA BÖN</p>
+                <div class="next-prayer-title" id="next-prayer-name">Beräknar…</div>
+                <div class="next-prayer-time" id="next-prayer-time">--:--</div>
+                <div class="countdown" id="next-countdown">Hämtar bönetider</div>
+                <div class="skyline" aria-hidden="true"><div class="dome dome-small"></div><div class="minaret"></div><div class="dome dome-center"></div><div class="minaret right"></div><div class="dome dome-small second"></div></div>
+              </div>
+              <div class="section-title"><h3>Dagens bönetider</h3><span class="section-sub">Ja'fari</span></div>
+              <div class="prayer-list" id="prayer-list" aria-live="polite"><p class="load">Beräknar tider…</p></div>
+              <p class="calc-note" id="calc-note">Beräknade tider kan skilja sig från den lokala Shia-församlingens kalender.</p>
+              <button class="oasis-entry" type="button" data-tab="oas"><span>MIN OAS</span><strong>Din trädgård växer</strong><small id="home-growth">Registrera dina böner</small></button><div class="dua-card" id="dua-card"><div class="dua-top"><span>✧ DAGENS DUA</span><span id="dua-ref">Koranen</span></div><p class="dua-arabic" lang="ar" dir="rtl" id="dua-arabic"></p><p class="dua-translation" id="dua-translation"></p></div>
+            </section>
+            <section class="tab-panel" data-panel="qibla" id="tab-qibla" aria-label="Qibla" hidden>
+              <h3 class="page-title">Qibla</h3><p class="page-subtitle">Riktningen till Kaba i Mecka</p>
+              <div class="qibla-card"><div class="compass" id="compass"><span class="compass-n">N</span><span class="compass-e">Ö</span><span class="compass-s">S</span><span class="compass-w">V</span><div class="compass-needle" id="compass-needle"><span class="needle-arrow">➤</span></div><div class="compass-center">🕋</div></div><div class="bearing" id="qibla-deg">--°</div><p class="compass-legend">från geografiskt norr</p><button type="button" class="btn btn-gold full-btn" id="compass-btn">Aktivera kompass</button><p class="sensor-info" id="sensor-info" role="status">Riktningen beräknas efter din plats. Livekompassen kräver stöd i mobilen och tillstånd.</p></div>
+            </section>
+            <section class="tab-panel" data-panel="dhikr" id="tab-dhikr" aria-label="Tasbih" hidden>
+              <h3 class="page-title">Dhikr</h3><p class="page-subtitle">Tasbih Fatima al-Zahra (a.s.) · 100 upprepningar</p>
+              <div class="dhikr-card"><div class="dhikr-stage" id="dhikr-stage">1 AV 3</div><p class="dhikr-arabic" lang="ar" id="dhikr-arabic">الله أكبر</p><p class="dhikr-word" id="dhikr-word">Allahu Akbar</p><div class="dhikr-ring" id="dhikr-ring"><span id="dhikr-count">0</span><small id="dhikr-target">av 34</small></div><button type="button" class="dhikr-tap" id="dhikr-tap">Tryck för att räkna <span aria-hidden="true">✧</span></button><div class="dhikr-progress"><span id="dhikr-total">0 / 100 totalt</span><button type="button" class="text-btn" id="dhikr-reset">Börja om</button></div><div class="progress-rail"><div id="progress-fill"></div></div><p class="sensor-info" id="dhikr-status">Dina upprepningar sparas på mobilen.</p></div>
+            </section>
+            <section class="tab-panel" data-panel="oas" id="tab-oas" hidden><div id="web-oas"></div></section><section class="tab-panel" data-panel="journal" id="tab-journal" hidden><div id="web-journal"></div></section><section class="tab-panel" data-panel="bibliotek" id="tab-bibliotek" hidden><div id="web-bibliotek"></div></section><section class="tab-panel" data-panel="mer" id="tab-mer" aria-labelledby="nav-mer" hidden>
+              <h3 class="page-title">Mer &amp; inställningar</h3><div class="web-shortcuts"><button type="button" class="btn btn-outline" data-tab="qibla">Qibla</button><button type="button" class="btn btn-outline" data-tab="dhikr">Tasbih</button></div><div id="web-prefs"></div><p class="page-subtitle">Din plats och hur bönetiderna visas.</p>
+              <div class="setting-card"><label for="city-select">Välj ort i Sverige</label><select id="city-select"><option value="">Senaste plats / automatisk</option><option value="kristianstad">Kristianstad</option><option value="malmo">Malmö</option><option value="stockholm">Stockholm</option><option value="goteborg">Göteborg</option><option value="helsingborg">Helsingborg</option><option value="lund">Lund</option><option value="uppsala">Uppsala</option><option value="jonkoping">Jönköping</option><option value="orebro">Örebro</option><option value="linkoping">Linköping</option><option value="vaxjo">Växjö</option><option value="umea">Umeå</option><option value="lulea">Luleå</option></select><button type="button" class="btn btn-outline full-btn" id="get-location">⌖ Använd min plats</button><p class="sensor-info" id="location-status" role="status">Platsen sparas bara på enheten. Du kan också välja en stad manuellt.</p></div>
+              <div class="setting-card"><h4>Bönetidsberäkning</h4><p>Ja'fari-inspirerad metod: Fajr 17,7°, Maghrib 4,5°, Isha 14°. Asr beräknas med standard-skuggfaktor. Fajr slutar vid soluppgång.</p><p>Detta är en ungefärlig astronomisk beräkning, inte en officiell kalender. Lokala religiösa justeringar kan behövas, särskilt på nordliga breddgrader.</p></div>
+              <div class="setting-card"><h4>Adhan och aviseringar</h4><p>Webbversionen har ännu inga automatiska böneaviseringar eller Adhan-alarm. iPhone kan inte få ett automatiskt fullständigt Adhan-väckaralarm via denna webbapp.</p></div>
+              <div class="setting-card"><h4>Kontakt</h4><p>Frågor eller förbättringar? <a href="mailto:norapp.support@gmail.com">norapp.support@gmail.com</a></p><p><a href="integritet.html">Integritetspolicy (utkast)</a></p></div>
+            </section>
+          </div>
+          <nav class="bottom-nav" aria-label="NOOR funktioner"><button type="button" id="nav-idag" class="nav-link active" data-tab="idag" aria-current="page"><span aria-hidden="true">⌂</span>Idag</button><button type="button" id="nav-oas" class="nav-link" data-tab="oas" ><span aria-hidden="true">❀</span>Min oas</button><button type="button" id="nav-journal" class="nav-link" data-tab="journal" ><span aria-hidden="true">▤</span>Journal</button><button type="button" id="nav-bibliotek" class="nav-link" data-tab="bibliotek" ><span aria-hidden="true">▧</span>Bibliotek</button><button type="button" id="nav-mer" class="nav-link" data-tab="mer" ><span aria-hidden="true">☷</span>Mer</button></nav>
+        </div>
+        <div class="app-aside" id="funktioner"><div class="aside-tag">BYGGD MED OMSORG</div><h2>En lugn stund,<br><span>varje dag.</span></h2><p>NOOR samlar det viktigaste i en enkel, personlig upplevelse. Allt du ser här är en fungerande webbversion – inte bara en bild av appen.</p><div class="feature-item"><span>☾</span><div><strong>Ja'fari-bönetider</strong><small>Fem dagliga böner och soluppgång</small></div></div><div class="feature-item"><span>↗</span><div><strong>Qibla</strong><small>Riktning mot Mecka från din plats</small></div></div><div class="feature-item"><span>✧</span><div><strong>Tasbih Fatima al-Zahra</strong><small>34 + 33 + 33 med sparat framsteg</small></div></div><div class="feature-item"><span>❀</span><div><strong>Dagens dua</strong><small>Arabiska och svensk återgivning</small></div></div></div>
+      </div>
+    </section>
+
+    <section class="install-section wrap" id="installera" aria-labelledby="install-title"><div class="install-heading"><p class="eyebrow">GRATIS · INGET APPBUTIKSKONTO</p><h2 id="install-title">Ta med NOOR <span>överallt.</span></h2><p>Följ stegen för din mobil. Webbappen fungerar utan Apple Developer- eller Google Play-konto.</p></div><div class="install-cards"><article class="install-card"><div class="platform-symbol">◉</div><h3>iPhone</h3><p>Använd NOOR 9.5.5 Webb från hemskärmen.</p><ol><li>Öppna den publicerade webbplatsen i <strong>Safari</strong>.</li><li>Tryck på <strong>Dela</strong> (fyrkant med pil).</li><li>Välj <strong>Lägg till på hemskärmen</strong>.</li><li>Tryck på <strong>Lägg till</strong> eller välj att öppna som webbapp.</li></ol><button type="button" class="btn btn-gold full-btn" id="install-ios">Visa installationshjälp</button></article><article class="install-card"><div class="platform-symbol">▣</div><h3>Android</h3><p>Använd webbappen direkt eller installera den separata Android-appen.</p><ol><li>Öppna webbplatsen i <strong>Chrome</strong>.</li><li>Tryck på webbläsarens meny.</li><li>Välj <strong>Installera app</strong> eller <strong>Lägg till på startskärmen</strong>.</li><li>NOOR får en egen ikon.</li></ol><button type="button" class="btn btn-outline full-btn" id="install-android">Installera webbappen</button><a href="#apk-status" id="apk-download" class="apk-link disabled" aria-disabled="true">APK för Android – inte tillgänglig ännu</a><p class="sensor-info" id="apk-status">Vi publicerar APK-filen först när alarmet är testat. Installation utanför Google Play kan ge en säkerhetsvarning.</p></article></div><p class="install-footnote">Observera: Webbläsarversionen har inga automatiska bönealarm. Uppgifterna lagras lokalt i din webbläsare. Webbplatsen måste först publiceras på en HTTPS-adress innan den kan installeras som webbapp.</p></section>
+  </main>
+  <footer class="footer wrap"><div class="footer-brand">☾ NOOR <span lang="ar">نور</span></div><p>En plats för bön, stillhet och påminnelse.</p><div class="footer-links"><a href="integritet.html">Integritet</a><a href="mailto:norapp.support@gmail.com">Kontakt</a><a href="#start">Till toppen ↑</a></div><small>NOOR 9.5.5 Webb · En fristående webbapp · Tiderna är uppskattningar och bör kontrolleras mot lokal Shia-kalender.</small></footer>
+  <div class="modal-backdrop" id="install-help" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" type="button" id="close-help" aria-label="Stäng">×</button><div class="platform-symbol">◉</div><h2 id="modal-title">NOOR på iPhone</h2><p>Öppna den publicerade NOOR-adressen i Safari, tryck på <strong>Dela</strong>, välj <strong>Lägg till på hemskärmen</strong> och bekräfta med <strong>Lägg till</strong>.</p><p class="sensor-info">Om alternativet inte syns kan du behöva bläddra i delningsmenyn. NOOR fungerar även utan installation i Safari.</p><button class="btn btn-gold full-btn" type="button" id="done-help">Jag förstår</button></div></div>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>

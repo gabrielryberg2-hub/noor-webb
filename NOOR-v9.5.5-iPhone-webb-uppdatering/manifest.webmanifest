@@ -1,0 +1,27 @@
+{
+  "name": "NOOR – Shia bönetider",
+  "short_name": "NOOR",
+  "description": "Ja’fari-bönetider, Min oas, bönejournal, guider, Qibla, Tasbih och dua.",
+  "id": "./?app=noor",
+  "start_url": "./?app=noor",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071d21",
+  "theme_color": "#092b2b",
+  "lang": "sv",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

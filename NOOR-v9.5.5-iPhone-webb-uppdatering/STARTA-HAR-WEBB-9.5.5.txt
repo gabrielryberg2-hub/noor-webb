@@ -1,0 +1,17 @@
+NOOR 9.5.5 WEBB – uppdateringspaket
+
+1. Spara en kopia av ditt nuvarande GitHub-projekt.
+2. Packa upp denna ZIP.
+3. I noor-webb, grenen main, välj Add file > Upload files.
+4. Dra in ALLA filer och mappen guide-images från den uppackade mappen (inte själva ZIP-filen eller en extra omslutande mapp). Behåll guide-images som undermapp.
+5. Kontrollera att index.html, app.mjs, sw.js och web-ui.mjs hamnar direkt i projektets rot. Commit changes.
+6. Kontrollera att Cloudflare/GitHub Pages har distribuerat ändringen. Öppna sidan på iPhone i Safari, stäng och öppna igen vid behov (ny service worker). Rensa INTE webbplatsdata om du vill behålla användardata.
+7. Testa bönetider, Qibla, Tasbih, journal, oas, guider, favoriter, tema, offline efter första laddningen och att Android-knappen fortfarande laddar ner 9.5.5.
+
+Detta paket ändrar endast webbplatsens rot. Den äldre arkiverade undermappen NOOR-gratis-webbapp-iPhone-Android ingår inte. Befintliga Android-APK:n, download-config.json, ikoner, manifest-ID och gamla lagringsnycklar är bevarade (manifestbeskrivningen uppdaterad). Ingen ny APK behöver byggas.
+
+Nya funktioner: 2D-oas med dekorationer, dag/natt och animerad fontän vid milstolpe, journal med månadsöversikt, streak och undantag, Qada, Khamenei-guider med 11 befintliga bilder (Ghusl och Tayammum som text), offline-dua och favoriter, egna dua, Hijri-kalender, fastedagbok, fokustimer, teman, barnvänlig guide, namnlista över imamer, JSON-export/import, fristående mobilvy. Källhänvisningar är vanlig text, inte länkar till Khameneis webbplats.
+
+Begränsningar: ingen appblockering, widget, automatiskt bönealarm, låsskärmsalarm eller Android/iPhone-synkronisering i webbappen. Inget komplett Ziyarat-bibliotek. Religiös expertgranskning återstår. Ingen fysisk Safari-testning.
+
+Tester: node web-tests.mjs (6 testgrupper godkända); syntaxkontroller, HTML-ID:n och bevarad APK-länk godkända. Chromium-test blockerades av testmiljön (ERR_BLOCKED_BY_ADMINISTRATOR), därför är klickflöden, offline-cache i riktig webbläsare och iPhone-installation ännu inte verifierade.

@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';
+import {prayers,prayerSteps,wudu,ghusl,tayammum,guideSourceLabel} from './web-guide.mjs';
+import {progress,rewards} from './web-upgrade.mjs';
+import {PRAYER_KEYS,setPrayerMark,shiftDayKey} from './web-prayerJournal.mjs';
+import {cleanState} from './web-ui.mjs';
+import {prayerTimes,qiblaBearing} from './solar.mjs';
+import {upcomingEvents} from './web-seasonal.mjs';
+const test=(name,fn)=>{fn();console.log('PASS '+name);};
+test('Guide: alla fem böner, två sujud/raka’a, källor och bildfiler',()=>{for(const [name,n] of Object.entries(prayers)){const steps=prayerSteps(name);assert.equal(steps.filter(s=>s[1]==='Första sujud').length,n);assert.equal(steps.filter(s=>s[1]==='Andra sujud').length,n);assert.equal(steps.filter(s=>s[1]==='Salam').length,1);for(const s of steps){assert.ok(guideSourceLabel(s[4]).includes('s.'));if(s[0])assert.ok(existsSync(`guide-images/${s[0]}.png`));}}assert.equal(wudu.length,5);assert.ok(ghusl.length&&tayammum.length);for(const s of wudu)assert.ok(existsSync(`guide-images/${s[0]}.png`));assert.ok(!readFileSync('web-guide.mjs','utf8').includes('https://'));});
+test('Journal och streak inklusive undantag',()=>{let j={};for(let i=0;i<7;i++){const day=shiftDayKey('2026-11-26',-i);for(const k of PRAYER_KEYS)j=setPrayerMark(j,day,k,'done');}assert.deepEqual(progress(j,'2026-11-26'),{current:7,best:7,total:35});assert.equal(progress(j,'2026-11-27',{'2026-11-27':true}).current,7);assert.equal(progress(j,'2026-11-29').current,0);});
+test('Lagring: validering, tema, sparade dekorationer och milstolpar',()=>{const x=cleanState({theme:'Ivory',growth:35,bestEver:7,earned:[7,999],qada:{fajr:3},decor:{0:'flower',1:'invalid'},focusMinutes:500,personal:['test']});assert.equal(x.theme,'Ivory');assert.equal(x.bestEver,7);assert.deepEqual(x.earned,[7]);assert.deepEqual(x.decor,{'0':'flower'});assert.equal(x.qada.fajr,3);assert.equal(x.focusMinutes,120);assert.equal(cleanState(JSON.parse(JSON.stringify(x))).personal[0],'test');});
+test('Bönetidsberäkning och kalender',()=>{const s=prayerTimes({year:2026,month:11,day:26},56.0294,14.1567);assert.ok(s.fajr<s.sunrise&&s.sunrise<s.dhuhr&&s.dhuhr<s.asr&&s.asr<s.maghrib&&s.maghrib<s.isha);assert.ok(Number.isFinite(qiblaBearing(56,14)));assert.ok(upcomingEvents(new Date('2026-11-26T12:00:00')).length);});
+test('Android-länk och webbapp-ID kvar',()=>{assert.ok(JSON.parse(readFileSync('download-config.json')).androidApkUrl.endsWith('/v9.5.5/NOOR-v9.5.5-signerad.apk'));const m=JSON.parse(readFileSync('manifest.webmanifest'));assert.equal(m.id,'./?app=noor');assert.equal(m.start_url,'./?app=noor');});
+test('Offline-cache innehåller alla guidebilder och importer',()=>{const files=JSON.parse(readFileSync('sw.js','utf8').match(/const UI=(\[.*\]);/)[1]);for(const p of files)assert.ok(existsSync(p));for(const n of ['web-ui','web-guide','web-prayerJournal','web-upgrade','web-seasonal'])assert.ok(files.includes('./'+n+'.mjs'));assert.equal(files.filter(x=>x.startsWith('./guide-images/')).length,11);});
