@@ -1,0 +1,5 @@
+Responsiv fristående förhandsversion, inte en kopia av den publicerade webbplatsen.
+Öppna index.html lokalt. Behåll index.html, style.css och release.js i samma mapp.
+Innan publicering: säkerhetskopiera befintlig Cloudflare Pages-webbplats, kontrollera att befintliga integritets-/villkorssidor och APK-länkar bevaras, lägg in den godkända offentliga APK-adressen (HTTPS) och versionen i release.js. Publicera aldrig Test 14/15/16 med oklara ljudrättigheter.
+
+RC1: förhandsinformation om nya funktioner, inte ett lanseringslöfte. Ingen publik APK-länk är aktiverad.
