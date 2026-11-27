@@ -59,3 +59,17 @@ body{margin:0;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
   .hero-lead,.quiet,.install-card,.footer,.app-aside{overflow-wrap:anywhere}
   .noor-standalone .app-content{overflow-y:auto;overflow-x:hidden;overscroll-behavior-x:none}
 }
+
+/* Webbfix 6 – presentation above the real NOOR web application. */
+html:not(.noor-standalone) body{background:#092821;color:#f7f2e7}
+.landing-six{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,6vw,80px);padding-block:clamp(36px,7vw,100px);min-height:0}
+.landing-six h1{font-size:clamp(2.6rem,6vw,5.2rem);line-height:1.04;letter-spacing:-.05em}
+.landing-six .hero-lead{font-size:clamp(1rem,2vw,1.25rem);max-width:38ch;color:#c0d0c5}
+.landing-six .hero-actions .btn{font-size:.95rem;min-height:48px;line-height:1.35;text-align:center}
+.landing-six .eyebrow{letter-spacing:.15em;font-size:.77rem}
+.landing-preview{display:grid;place-items:center;min-width:0;background:radial-gradient(ellipse,#285749,transparent 72%);padding:16px}
+.landing-phone{width:min(100%,260px);border:2px solid #b69b63;border-radius:30px;padding:24px 18px;background:#102e27;box-shadow:0 18px 50px #0005;text-align:center}
+.landing-brand{color:#e5c688;font-weight:750;letter-spacing:.15em;margin:12px 0 20px}
+.landing-prayer{font-size:2rem;color:#e5c688}.landing-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:24px}.landing-tiles span{background:#123a30;padding:14px 5px;border-radius:10px;font-size:.85rem}
+.landing-back{display:none}.noor-standalone .landing-back{display:inline-flex;font-size:12px;min-height:44px;align-items:center;color:#e5c688}.noor-standalone .app-toprow{flex-wrap:wrap}
+@media(max-width:850px){.landing-six{grid-template-columns:minmax(0,1fr);padding-block:32px 38px}.landing-six h1{font-size:clamp(2.35rem,9vw,4rem)}.landing-preview{padding:0 0 12px}.landing-six .hero-actions .btn{flex:1 1 100%;max-width:100%}.landing-six .hero-lead{margin-bottom:20px}.landing-six .quiet{margin-top:14px}}

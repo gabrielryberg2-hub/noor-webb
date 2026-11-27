@@ -14,10 +14,10 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
   <title>NOOR – Shia bönetider för iPhone och Android</title>
-<meta name="noor-layout-build" content="5">
-<style id="noor-layout-5">
+<meta name="noor-layout-build" content="6">
+<style id="noor-layout-6">
 /* NOOR layout 5: prevent accidental horizontal panning; preserve pinch zoom. */
 html{overflow-x:hidden;overscroll-behavior-x:none}
 body{margin:0;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
@@ -45,15 +45,15 @@ body{margin:0;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
     <span class="free-mark">KOSTNADSFRI</span>
   </header>
   <main id="start">
-    <section class="intro wrap" aria-labelledby="main-title">
+    <section class="intro wrap landing-six" aria-labelledby="main-title">
       <div class="intro-copy">
-        <p class="eyebrow"><span class="tiny-moon">☾</span> DIN DAGLIGA BÖNEKOMPASS</p>
-        <h1 id="main-title">Låt bönen <span>lysa upp</span> din dag.</h1>
-        <p class="hero-lead">NOOR ger dig Shia-bönetider, en personlig oas, bönejournal och illustrerade böneguider i en lugn och vacker upplevelse. På iPhone och Android – helt gratis.</p>
-        <div class="hero-actions"><a href="#appen" class="btn btn-gold">Öppna NOOR <span aria-hidden="true">↗</span></a><a href="#installera" class="btn btn-outline">Lägg till på mobilen</a></div>
-        <p class="quiet"><span class="small-check">✓</span> Inget konto behövs <span class="middle-dot">·</span> Ingen reklam i webbappen</p>
+        <p class="eyebrow">DIN ANDLIGA FÖLJESLAGARE</p>
+        <h1 id="main-title">Mer närvaro.<br><span>Varje dag.</span></h1>
+        <p class="hero-lead">Bönetider enligt Ja’fari, Koranen, Qibla och verktyg för din andliga resa – samlade i NOOR.</p>
+        <div class="hero-actions"><a id="hero-apk" href="https://github.com/gabrielryberg2-hub/noor-webb/releases/download/v9.5.6/NOOR-v9.5.6-signerad.apk" class="btn btn-gold">Ladda ner för Android · 9.5.6</a><a href="?app=noor&amp;webb=6" class="btn btn-outline">Öppna webbappen (iPhone / Android)</a><a href="#installera" class="btn btn-outline">Installationshjälp</a></div>
+        <p class="quiet">Gratis · Inget konto behövs · <a href="en/" lang="en">English</a></p>
       </div>
-      <div class="hero-symbol" aria-hidden="true"><div class="halo halo-outer"></div><div class="halo halo-inner"></div><span class="hero-crescent">☪</span><div class="hero-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div></div>
+      <div class="landing-preview" aria-label="Illustration av NOOR, inte aktuella bönetider"><div class="landing-phone"><p class="landing-brand">NOOR</p><p class="eyebrow">NÄSTA BÖN</p><strong class="landing-prayer">Maghrib</strong><p class="quiet">Illustration av appen</p><div class="landing-tiles"><span>◷ Bönetider</span><span>◇ Qibla</span><span>▤ Koranen</span><span>♡ Min resa</span></div></div></div>
     </section>
 
     <section class="app-area wrap" id="appen" aria-labelledby="app-title">
@@ -61,7 +61,7 @@ body{margin:0;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
       <div class="phone-surround">
         <div class="phone" role="application" aria-label="NOOR webbapp">
           <div class="app-top">
-            <div class="app-toprow"><div class="app-mark">☾ <b>NOOR</b> <span lang="ar">نور</span> <small class="web-version">9.5.6</small></div><button type="button" class="icon-btn" id="settings-shortcut" aria-label="Visa inställningar">⚙</button></div>
+            <div class="app-toprow"><a class="landing-back" href="./?webb=6" aria-label="Till webbplatsen">← Webbplats</a><div class="app-mark">☾ <b>NOOR</b> <span lang="ar">نور</span> <small class="web-version">9.5.6</small></div><button type="button" class="icon-btn" id="settings-shortcut" aria-label="Visa inställningar">⚙</button></div>
             <div class="loc-line"><span aria-hidden="true">⌖</span><span id="location-name">Kristianstad</span><span class="loc-dot" aria-hidden="true"></span><span id="date-label">Laddar datum…</span></div>
           </div>
           <div class="app-content" id="app-content"><div id="alarm-banner" class="web-card" hidden><strong id="alarm-message"></strong><button class="web-btn" id="alarm-dismiss">Stäng påminnelse</button></div>
@@ -102,8 +102,8 @@ body{margin:0;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
 
     <section class="install-section wrap" id="installera" aria-labelledby="install-title"><div class="install-heading"><p class="eyebrow">GRATIS · INGET APPBUTIKSKONTO</p><h2 id="install-title">Ta med NOOR <span>överallt.</span></h2><p>Följ stegen för din mobil. Webbappen fungerar utan Apple Developer- eller Google Play-konto.</p></div><div class="install-cards"><article class="install-card"><div class="platform-symbol">◉</div><h3>iPhone</h3><p>Använd NOOR 9.5.6 Webb från hemskärmen.</p><ol><li>Öppna den publicerade webbplatsen i <strong>Safari</strong>.</li><li>Tryck på <strong>Dela</strong> (fyrkant med pil).</li><li>Välj <strong>Lägg till på hemskärmen</strong>.</li><li>Tryck på <strong>Lägg till</strong> eller välj att öppna som webbapp.</li></ol><button type="button" class="btn btn-gold full-btn" id="install-ios">Visa installationshjälp</button></article><article class="install-card"><div class="platform-symbol">▣</div><h3>Android</h3><p>Använd webbappen direkt eller installera den separata Android-appen.</p><ol><li>Öppna webbplatsen i <strong>Chrome</strong>.</li><li>Tryck på webbläsarens meny.</li><li>Välj <strong>Installera app</strong> eller <strong>Lägg till på startskärmen</strong>.</li><li>NOOR får en egen ikon.</li></ol><button type="button" class="btn btn-outline full-btn" id="install-android">Installera webbappen</button><a href="https://github.com/gabrielryberg2-hub/noor-webb/releases/download/v9.5.6/NOOR-v9.5.6-signerad.apk" id="apk-download" class="apk-link">Ladda ner NOOR 9.5.6 för Android (APK)</a><p class="sensor-info" id="apk-status">Befintlig Android-version 9.5.6. Installation utanför Google Play kan ge en säkerhetsvarning.</p></article></div><p class="install-footnote">Observera: Webbläsarversionen kan ge påminnelser när den är öppen och synlig, men saknar tillförlitliga bakgrundsalarm. Uppgifterna lagras lokalt i din webbläsare. Webbplatsen måste först publiceras på en HTTPS-adress innan den kan installeras som webbapp.</p></section>
   </main>
-  <footer class="footer wrap"><div class="footer-brand">☾ NOOR <span lang="ar">نور</span></div><p>En plats för bön, stillhet och påminnelse.</p><div class="footer-links"><a href="integritet.html">Integritet</a><a href="mailto:norapp.support@gmail.com">Kontakt</a><a href="#start">Till toppen ↑</a></div><small>NOOR 9.5.6 Webb · Layout 5 · En fristående webbapp · Tiderna är uppskattningar och bör kontrolleras mot lokal Shia-kalender.</small></footer>
+  <footer class="footer wrap"><div class="footer-brand">☾ NOOR <span lang="ar">نور</span></div><p>En plats för bön, stillhet och påminnelse.</p><div class="footer-links"><a href="integritet.html">Integritet</a><a href="mailto:norapp.support@gmail.com">Kontakt</a><a href="#start">Till toppen ↑</a></div><small>NOOR 9.5.6 Webb · Webbfix 6 · En fristående webbapp · Tiderna är uppskattningar och bör kontrolleras mot lokal Shia-kalender.</small></footer>
   <div class="modal-backdrop" id="install-help" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" type="button" id="close-help" aria-label="Stäng">×</button><div class="platform-symbol">◉</div><h2 id="modal-title">NOOR på iPhone</h2><p>Öppna den publicerade NOOR-adressen i Safari, tryck på <strong>Dela</strong>, välj <strong>Lägg till på hemskärmen</strong> och bekräfta med <strong>Lägg till</strong>.</p><p class="sensor-info">Om alternativet inte syns kan du behöva bläddra i delningsmenyn. NOOR fungerar även utan installation i Safari.</p><button class="btn btn-gold full-btn" type="button" id="done-help">Jag förstår</button></div></div>
-  <script type="module" src="app.mjs"></script>
+  <script type="module" src="app.mjs?v=6"></script>
 </body>
 </html>
