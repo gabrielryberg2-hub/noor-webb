@@ -14,8 +14,27 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=5">
   <title>NOOR – Shia bönetider för iPhone och Android</title>
+<meta name="noor-layout-build" content="5">
+<style id="noor-layout-5">
+/* NOOR layout 5: prevent accidental horizontal panning; preserve pinch zoom. */
+html{overflow-x:hidden;overscroll-behavior-x:none}
+body{margin:0;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+@media (max-width: 850px){
+  html,body{touch-action:pan-y pinch-zoom}
+  body{width:100%;background-image:radial-gradient(ellipse at top right,#164d4966,transparent 55%)}
+  .ambient{display:none!important}
+  main,.wrap,.intro,.phone-surround,.app-area,.install-cards,.install-card,.app-aside,.footer{min-width:0;max-width:100%}
+  .intro,.phone-surround,.install-cards{grid-template-columns:minmax(0,1fr)}
+  .site-header>* , .intro>* , .phone-surround>* , .install-cards>*{min-width:0;max-width:100%}
+  .phone,.app-content,.tab-panel,.web-card,.setting-card{min-width:0;max-width:100%}
+  .phone :is(img,svg,video,input,select,textarea,fieldset){max-width:100%}
+  .top-links,.hero-actions,.app-toprow,.loc-line,.footer-links{flex-wrap:wrap}
+  .hero-lead,.quiet,.install-card,.footer,.app-aside{overflow-wrap:anywhere}
+  .noor-standalone .app-content{overflow-y:auto;overflow-x:hidden;overscroll-behavior-x:none}
+}
+</style>
 </head>
 <body>
   <div class="ambient ambient-one" aria-hidden="true"></div>
@@ -83,7 +102,7 @@
 
     <section class="install-section wrap" id="installera" aria-labelledby="install-title"><div class="install-heading"><p class="eyebrow">GRATIS · INGET APPBUTIKSKONTO</p><h2 id="install-title">Ta med NOOR <span>överallt.</span></h2><p>Följ stegen för din mobil. Webbappen fungerar utan Apple Developer- eller Google Play-konto.</p></div><div class="install-cards"><article class="install-card"><div class="platform-symbol">◉</div><h3>iPhone</h3><p>Använd NOOR 9.5.6 Webb från hemskärmen.</p><ol><li>Öppna den publicerade webbplatsen i <strong>Safari</strong>.</li><li>Tryck på <strong>Dela</strong> (fyrkant med pil).</li><li>Välj <strong>Lägg till på hemskärmen</strong>.</li><li>Tryck på <strong>Lägg till</strong> eller välj att öppna som webbapp.</li></ol><button type="button" class="btn btn-gold full-btn" id="install-ios">Visa installationshjälp</button></article><article class="install-card"><div class="platform-symbol">▣</div><h3>Android</h3><p>Använd webbappen direkt eller installera den separata Android-appen.</p><ol><li>Öppna webbplatsen i <strong>Chrome</strong>.</li><li>Tryck på webbläsarens meny.</li><li>Välj <strong>Installera app</strong> eller <strong>Lägg till på startskärmen</strong>.</li><li>NOOR får en egen ikon.</li></ol><button type="button" class="btn btn-outline full-btn" id="install-android">Installera webbappen</button><a href="https://github.com/gabrielryberg2-hub/noor-webb/releases/download/v9.5.6/NOOR-v9.5.6-signerad.apk" id="apk-download" class="apk-link">Ladda ner NOOR 9.5.6 för Android (APK)</a><p class="sensor-info" id="apk-status">Befintlig Android-version 9.5.6. Installation utanför Google Play kan ge en säkerhetsvarning.</p></article></div><p class="install-footnote">Observera: Webbläsarversionen kan ge påminnelser när den är öppen och synlig, men saknar tillförlitliga bakgrundsalarm. Uppgifterna lagras lokalt i din webbläsare. Webbplatsen måste först publiceras på en HTTPS-adress innan den kan installeras som webbapp.</p></section>
   </main>
-  <footer class="footer wrap"><div class="footer-brand">☾ NOOR <span lang="ar">نور</span></div><p>En plats för bön, stillhet och påminnelse.</p><div class="footer-links"><a href="integritet.html">Integritet</a><a href="mailto:norapp.support@gmail.com">Kontakt</a><a href="#start">Till toppen ↑</a></div><small>NOOR 9.5.6 Webb · En fristående webbapp · Tiderna är uppskattningar och bör kontrolleras mot lokal Shia-kalender.</small></footer>
+  <footer class="footer wrap"><div class="footer-brand">☾ NOOR <span lang="ar">نور</span></div><p>En plats för bön, stillhet och påminnelse.</p><div class="footer-links"><a href="integritet.html">Integritet</a><a href="mailto:norapp.support@gmail.com">Kontakt</a><a href="#start">Till toppen ↑</a></div><small>NOOR 9.5.6 Webb · Layout 5 · En fristående webbapp · Tiderna är uppskattningar och bör kontrolleras mot lokal Shia-kalender.</small></footer>
   <div class="modal-backdrop" id="install-help" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" type="button" id="close-help" aria-label="Stäng">×</button><div class="platform-symbol">◉</div><h2 id="modal-title">NOOR på iPhone</h2><p>Öppna den publicerade NOOR-adressen i Safari, tryck på <strong>Dela</strong>, välj <strong>Lägg till på hemskärmen</strong> och bekräfta med <strong>Lägg till</strong>.</p><p class="sensor-info">Om alternativet inte syns kan du behöva bläddra i delningsmenyn. NOOR fungerar även utan installation i Safari.</p><button class="btn btn-gold full-btn" type="button" id="done-help">Jag förstår</button></div></div>
   <script type="module" src="app.mjs"></script>
 </body>

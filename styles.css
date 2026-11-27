@@ -26,3 +26,36 @@
 .site-header{height:auto;min-height:75px;flex-wrap:wrap;padding-block:12px;gap:12px}.top-links{flex-wrap:wrap;gap:12px}.top-links a{display:inline-flex;align-items:center;min-height:44px}.intro>* ,.phone-surround>* ,.install-cards>*{min-width:0}.hero-actions{flex-wrap:wrap}.btn,.apk-link{white-space:normal;overflow-wrap:anywhere;min-height:44px}.apk-link{display:block;text-align:center;padding:12px}.phone .loc-line{flex-wrap:wrap}.phone .nav-link{overflow-wrap:anywhere;min-width:0}.web-card,.setting-card{overflow-wrap:anywhere}.modal-card{max-height:90dvh;overflow:auto}.footer{overflow-wrap:anywhere}.phone img{max-width:100%}.phone .web-group>*{max-width:100%}
 @media(max-width:850px){.phone-surround{grid-template-columns:minmax(0,1fr);justify-items:center}.phone{max-width:540px}.app-aside{max-width:540px}.app-heading{flex-wrap:wrap}}
 @media(max-width:710px){.wrap{width:calc(100% - 24px);max-width:540px}.site-header .top-links{display:flex;order:3;width:100%;margin:0;justify-content:space-between;gap:4px 10px}.top-links a{font-size:13px}.hero-actions .btn{flex:1 1 100%;text-align:center;justify-content:center}.phone-surround{padding:10px 0;border:0;background:none}.phone{max-width:none;border-width:1px;border-radius:20px;min-height:0}.app-content{min-width:0}.app-heading>p{text-align:left}.install-card{padding:20px}.phone .bottom-nav{padding-inline:2px}.phone .nav-link{font-size:10px}.intro h1{font-size:clamp(34px,9vw,48px)}.noor-standalone .phone{height:100dvh;border:0;border-radius:0}.noor-standalone .app-area{max-width:none}}
+
+/* Mobile overflow fix: keep decorative glows within the viewport. */
+html{overflow-x:clip}
+body{overflow-x:clip}
+.ambient-one{right:0;width:min(490px,100%)}
+.ambient-two{left:0;width:min(430px,100%)}
+@media(max-width:710px){
+ .intro,.install-cards{grid-template-columns:minmax(0,1fr)}
+ .phone,.phone-surround,.app-content,.tab-panel,.install-card{min-width:0;max-width:100%}
+ .app-toprow,.section-title,.footer-links{flex-wrap:wrap}
+ .prayer-info{min-width:0}
+ .phone :is(input,select,textarea,fieldset){max-width:100%;min-width:0}
+ .bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr))}
+ .app-content{overflow-wrap:anywhere}
+ .noor-standalone .phone{max-width:none}
+}
+
+/* NOOR layout 5: prevent accidental horizontal panning; preserve pinch zoom. */
+html{overflow-x:hidden;overscroll-behavior-x:none}
+body{margin:0;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+@media (max-width: 850px){
+  html,body{touch-action:pan-y pinch-zoom}
+  body{width:100%;background-image:radial-gradient(ellipse at top right,#164d4966,transparent 55%)}
+  .ambient{display:none!important}
+  main,.wrap,.intro,.phone-surround,.app-area,.install-cards,.install-card,.app-aside,.footer{min-width:0;max-width:100%}
+  .intro,.phone-surround,.install-cards{grid-template-columns:minmax(0,1fr)}
+  .site-header>* , .intro>* , .phone-surround>* , .install-cards>*{min-width:0;max-width:100%}
+  .phone,.app-content,.tab-panel,.web-card,.setting-card{min-width:0;max-width:100%}
+  .phone :is(img,svg,video,input,select,textarea,fieldset){max-width:100%}
+  .top-links,.hero-actions,.app-toprow,.loc-line,.footer-links{flex-wrap:wrap}
+  .hero-lead,.quiet,.install-card,.footer,.app-aside{overflow-wrap:anywhere}
+  .noor-standalone .app-content{overflow-y:auto;overflow-x:hidden;overscroll-behavior-x:none}
+}
