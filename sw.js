@@ -1,4 +1,4 @@
-const CACHE = 'noor-web-v9.5.6-cloudflare-fix2';
+const CACHE = 'noor-web-v9.5.6-responsive-fix3';
 const UI = [
   "./",
   "./styles.css",
