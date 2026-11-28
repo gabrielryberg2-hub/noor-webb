@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {LIBRARY} from './web-duas-data.mjs';
+import {EVENTS} from './web-calendar-data.mjs';
+import {fields,toggleFields,hijri,monthGrid,upcoming} from './web-reading-calendar.mjs';
+const test=(n,f)=>{f();console.log('PASS '+n);};
+test('Fyra böner och 968 fullständiga textavsnitt',()=>{assert.equal(LIBRARY.length,4);assert.deepEqual(LIBRARY.map(e=>e.rows.filter(r=>fields.every(k=>typeof r[k]==='string'&&r[k].trim())).length),[250,169,363,186]);for(const e of LIBRARY)for(const r of e.rows)assert.ok(r.instruction||fields.every(k=>r[k]));});
+test('Läsanvisningar bevarade',()=>assert.equal(LIBRARY.flatMap(e=>e.rows).filter(r=>r.instruction).length,7));
+test('Visningsknappar: minst ett språk',()=>{let a=toggleFields(fields,'english');assert.deepEqual(a,['arabic','transliteration']);a=toggleFields(a,'arabic');assert.deepEqual(a,['transliteration']);assert.deepEqual(toggleFields(a,'transliteration'),a);assert.deepEqual(toggleFields(a,'english'),['transliteration','english']);});
+test('25 kalenderhändelser',()=>assert.equal(Object.values(EVENTS).flat().length,25));
+test('Månadsvy och skottår',()=>{let g=monthGrid(new Date(2028,1,1,12));assert.equal(g.filter(Boolean).length,29);assert.equal(g[0],null);assert.ok(g.filter(Boolean).every(x=>x.h?.day>=1&&x.h?.day<=30));});
+test('Hijri-justering och kommande händelser',()=>{const d=new Date(2026,10,28,12);const t=new Date(d);t.setDate(t.getDate()+1);assert.deepEqual(hijri(d,1),hijri(t));assert.ok(upcoming(d).length>0);});
+test('Moduler och offline-cache',()=>{const sw=readFileSync('sw.js','utf8');for(const f of ['web-reading-calendar.mjs','web-calendar-data.mjs','web-duas-data.mjs','noor10-extra.css'])assert.ok(sw.includes(`./${f}`));const html=readFileSync('index.html','utf8');for(const id of ['noor10-reading-root','noor10-calendar-root'])assert.ok(html.includes(`id="${id}"`));assert.ok(html.includes('/v10.0.0/NOOR-10.0.0.apk'));});

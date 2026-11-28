@@ -1,10 +1,14 @@
-const CACHE = 'noor-web-v9.5.6-responsive-fix6';
+const CACHE = 'noor-web-v10-reading-calendar';
 const UI = [
   "./",
   "./styles.css",
-  "./styles.css?v=6",
+  "./styles.css?v=10",
   "./app.mjs",
-  "./app.mjs?v=6",
+  "./app.mjs?v=10",
+  "./noor10-extra.css",
+  "./web-reading-calendar.mjs",
+  "./web-duas-data.mjs",
+  "./web-calendar-data.mjs",
   "./en/index.html",
   "./solar.mjs",
   "./manifest.webmanifest",
@@ -67,6 +71,6 @@ self.addEventListener('fetch', e => {
    })());return;
  }
  if (u.pathname.endsWith('/styles.css')) {
-   e.respondWith((async()=>{const c=await caches.open(CACHE);try{const fresh=await fetch(r,{cache:'no-cache'});if(fresh.ok)await c.put(r,fresh.clone());return fresh;}catch(error){const cached=await c.match(r)||await c.match(new URL('./styles.css?v=6',base));if(cached)return cached;throw error;}})());return;
+   e.respondWith((async()=>{const c=await caches.open(CACHE);try{const fresh=await fetch(r,{cache:'no-cache'});if(fresh.ok)await c.put(r,fresh.clone());return fresh;}catch(error){const cached=await c.match(r)||await c.match(new URL('./styles.css?v=10',base));if(cached)return cached;throw error;}})());return;
  }
  e.respondWith(caches.open(CACHE).then(async c=>{const cached=await c.match(r);if(cached){const range=r.headers.get('range');if(range&&u.pathname.endsWith('/audio/adhan.mp3')){const bytes=await cached.arrayBuffer(),m=/^bytes=(\d*)-(\d*)$/.exec(range);if(!m||(!m[1]&&!m[2]))return new Response(null,{status:416,headers:{'Content-Range':`bytes */${bytes.byteLength}`}});const start=m[1]?Number(m[1]):Math.max(0,bytes.byteLength-Number(m[2])),end=m[1]&&m[2]?Math.min(Number(m[2]),bytes.byteLength-1):bytes.byteLength-1;if(start>end||start>=bytes.byteLength)return new Response(null,{status:416,headers:{'Content-Range':`bytes */${bytes.byteLength}`}});return new Response(bytes.slice(start,end+1),{status:206,headers:{'Content-Type':'audio/mpeg','Content-Range':`bytes ${start}-${end}/${bytes.byteLength}`,'Content-Length':String(end-start+1),'Accept-Ranges':'bytes'}});}return cached;}return fetch(r);}));});

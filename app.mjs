@@ -1,3 +1,4 @@
+import {initReadingCalendar} from './web-reading-calendar.mjs';
 import {qiblaInfo,smoothHeading,normalize,guidance} from './web-qibla.mjs';
 import { initPrayerAlarms } from './web-alarms.mjs';
 import { initWebUpgrade } from './web-ui.mjs';
@@ -157,12 +158,13 @@ $('install-help').addEventListener('click',e=>{if(e.target===$('install-help'))c
 if(location.protocol.startsWith('http'))fetch(new URL('download-config.json',location.href),{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(config=>{
   const url=String(config.androidApkUrl||'').trim();
   if(url&&/^https:\/\//i.test(url)){
-   const a=$('apk-download');a.href=url;const hero=$('hero-apk');if(hero)hero.href=url;a.classList.remove('disabled');a.removeAttribute('aria-disabled');a.textContent='Ladda ner NOOR 9.5.6 för Android (APK)';
+   const a=$('apk-download');a.href=url;const hero=$('hero-apk');if(hero)hero.href=url;a.classList.remove('disabled');a.removeAttribute('aria-disabled');a.textContent='Ladda ner NOOR 10.0.0 för Android (APK)';
    $('apk-status').textContent='Android kan visa en säkerhetsvarning vid installation utanför Google Play. Ladda bara ner om du litar på utgivaren.';
   }
 }).catch(()=>{});
 $('apk-download').addEventListener('click',e=>{if($('apk-download').classList.contains('disabled'))e.preventDefault();});
-if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6',{updateViaCache:'none'}).catch(()=>{}));
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=10',{updateViaCache:'none'}).catch(()=>{}));
+initReadingCalendar();
 initWebUpgrade({ getLocation:()=>loc, getSchedule:()=>schedule, chooseTab, dua });
 initPrayerAlarms(()=>loc);
 renderDhikr();refreshSchedule();window.setInterval(refreshSchedule,30000);
